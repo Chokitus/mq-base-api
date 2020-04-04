@@ -15,8 +15,9 @@ public abstract class MessagingClient<T> implements AutoCloseable {
 		this.channel = channel;
 	}
 
-	public abstract void send(Message message);
-	public abstract Message receive(byte[] message);
+	protected abstract void sendImpl(Message message) throws Exception;
+	protected abstract Message receiveImpl(String from) throws Exception;
+	protected abstract void closeImpl() throws Exception;
 
 	@Override
 	public void close() throws MessageQueueException {
@@ -27,5 +28,20 @@ public abstract class MessagingClient<T> implements AutoCloseable {
 		}
 	}
 
-	public abstract void closeImpl() throws Exception;
+	public void send(final Message message) throws MessageQueueException {
+		try {
+			sendImpl(message);
+		} catch (final Exception e) {
+			throw new MessageQueueException(e);
+		}
+	}
+
+	public void receive(final String from) throws MessageQueueException {
+		try {
+			receiveImpl(from);
+		} catch (final Exception e) {
+			throw new MessageQueueException(e);
+		}
+	}
+
 }

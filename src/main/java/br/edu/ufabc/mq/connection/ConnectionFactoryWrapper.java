@@ -15,13 +15,13 @@ public abstract class ConnectionFactoryWrapper<F, C, T> {
 	protected final Map<String, Object> properties;
 
 	public ConnectionFactoryWrapper(final Map<String, Object> properties) throws MessageQueueException {
-		this.factory = getFactory();
 		this.properties = properties;
+		this.factory = getFactory();
 	}
 
-	public T getNewClient(final C connection) throws MessageQueueException {
+	public T getNewClient(final Connection<C> connection, final Map<String, Object> clientProperties) throws MessageQueueException {
 		try {
-			return getNewClientImpl(connection);
+			return getNewClientImpl(connection.getConnectionInstance(), clientProperties);
 		} catch (final Exception e) {
 			throw new MessageQueueException(e);
 		}
@@ -43,7 +43,7 @@ public abstract class ConnectionFactoryWrapper<F, C, T> {
 		}
 	}
 
-	protected abstract T getNewClientImpl(C connection) throws Exception;
+	protected abstract T getNewClientImpl(C connection, Map<String, Object> clientProperties) throws Exception;
 
 	protected abstract F getFactoryImpl() throws Exception;
 
