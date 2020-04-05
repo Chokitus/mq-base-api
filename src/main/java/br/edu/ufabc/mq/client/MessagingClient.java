@@ -36,9 +36,9 @@ public abstract class MessagingClient<T> implements AutoCloseable {
 		}
 	}
 
-	public void receive(final String from) throws MessageQueueException {
+	public Message receive(final String from) throws MessageQueueException {
 		try {
-			receiveImpl(from);
+			return receiveImpl(from);
 		} catch (final Exception e) {
 			throw new MessageQueueException(e);
 		}
