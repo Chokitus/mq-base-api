@@ -35,9 +35,9 @@ public abstract class ConnectionFactoryWrapper<F, C, T> {
 		}
 	}
 
-	public Connection<C> getConnection() throws MessageQueueException {
+	public Connection<C> getConnection(final Map<String, Object> properties) throws MessageQueueException {
 		try {
-			return new Connection<>(getConnectionImpl());
+			return new Connection<>(getConnectionImpl(properties));
 		} catch (final Exception e) {
 			throw new MessageQueueException(e);
 		}
@@ -47,5 +47,5 @@ public abstract class ConnectionFactoryWrapper<F, C, T> {
 
 	protected abstract F getFactoryImpl() throws Exception;
 
-	protected abstract C getConnectionImpl() throws Exception;
+	protected abstract C getConnectionImpl(Map<String, Object> properties) throws Exception;
 }
