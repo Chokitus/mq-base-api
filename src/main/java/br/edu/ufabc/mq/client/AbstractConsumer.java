@@ -7,18 +7,18 @@ import br.edu.ufabc.mq.message.AbstractMessage;
 import lombok.Data;
 
 @Data
-public abstract class MessagingReceiver<C, M extends AbstractMessage<?>> implements Startable {
+public abstract class AbstractConsumer<C, M extends AbstractMessage<?>> implements Startable {
 	protected final C client;
 	protected final Map<String, Object> properties;
 
 	public M receive(final String property) throws MessagingException {
 		try {
-			return receiveImpl(property);
+			return consumeImpl(property);
 		} catch (final Exception e) {
 			throw new MessagingException(e);
 		}
 	}
 
-	protected abstract M receiveImpl(String property) throws Exception;
+	protected abstract M consumeImpl(String property) throws Exception;
 
 }

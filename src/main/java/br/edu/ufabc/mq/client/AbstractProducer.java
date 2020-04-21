@@ -3,16 +3,18 @@ package br.edu.ufabc.mq.client;
 import java.util.Map;
 
 import br.edu.ufabc.mq.exception.MessagingException;
+import br.edu.ufabc.mq.message.AbstractMessage;
 import lombok.Data;
 
 @Data
-public abstract class MessagingProducer<C, M> implements Startable {
+public abstract class AbstractProducer<C, M extends AbstractMessage<?>> implements Startable {
 	protected final C client;
 	protected final Map<String, Object> properties;
 
-	public M send(final M message) throws MessagingException {
+	@SuppressWarnings("unchecked")
+	public M send(final AbstractMessage<?> message) throws MessagingException {
 		try {
-			return sendImpl(message);
+			return sendImpl((M) message);
 		} catch (final Exception e) {
 			throw new MessagingException(e);
 		}
