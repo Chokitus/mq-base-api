@@ -15,11 +15,11 @@ public abstract class AbstractWrapperFactory<C extends AbstractConsumer<?, ?>, P
 	protected final Map<String, Object> properties;
 
 	/**
-	 * Esta chamada também chama o método {@link #createClientFactory(Map)}, e
-	 * utiliza o mesmo mapa de propriedades.
+	 * This also calls {@link #createClientFactory(Map)} and utilizes the same
+	 * property map.
 	 *
-	 * @param properties Mapa genérico de propriedades
-	 * @throws MessagingException Caso algo dê errado
+	 * @param properties Generic map of properties
+	 * @throws MessagingException
 	 */
 	public AbstractWrapperFactory(final Map<String, Object> properties) throws MessagingException {
 		this.properties = properties;
@@ -31,8 +31,9 @@ public abstract class AbstractWrapperFactory<C extends AbstractConsumer<?, ?>, P
 	}
 
 	@SuppressWarnings("unchecked")
-	public M createMessageForProducer(final String body, final String destination, final AbstractProducer<?,?> producer,
-			final Map<String, Object> messageProperties) throws MessagingException {
+	public M createMessageForProducer(final byte[] body, final String destination,
+			final AbstractProducer<?, ?> producer, final Map<String, Object> messageProperties)
+			throws MessagingException {
 		try {
 			return createMessageForProducerImpl(body, destination, (P) producer, messageProperties, clientFactory);
 		} catch (final Exception e) {
@@ -40,7 +41,7 @@ public abstract class AbstractWrapperFactory<C extends AbstractConsumer<?, ?>, P
 		}
 	}
 
-	public M createMessageForConsumer(final String body, final String destination, final C consumer,
+	public M createMessageForConsumer(final byte[] body, final String destination, final C consumer,
 			final Map<String, Object> messageProperties) throws MessagingException {
 		try {
 			return createMessageForConsumerImpl(body, destination, consumer, messageProperties, clientFactory);
@@ -50,7 +51,7 @@ public abstract class AbstractWrapperFactory<C extends AbstractConsumer<?, ?>, P
 	}
 
 	@SuppressWarnings("unchecked")
-	public void startConsumer(final AbstractConsumer<?,?> consumer, final Map<String, Object> clientStartProperties)
+	public void startConsumer(final AbstractConsumer<?, ?> consumer, final Map<String, Object> clientStartProperties)
 			throws MessagingException {
 		try {
 			startConsumerImpl((C) consumer, clientStartProperties, clientFactory);
@@ -60,7 +61,7 @@ public abstract class AbstractWrapperFactory<C extends AbstractConsumer<?, ?>, P
 	}
 
 	@SuppressWarnings("unchecked")
-	public void startProducer(final AbstractProducer<?,?> producer, final Map<String, Object> clientStartProperties)
+	public void startProducer(final AbstractProducer<?, ?> producer, final Map<String, Object> clientStartProperties)
 			throws MessagingException {
 		try {
 			startProducerImpl((P) producer, clientStartProperties, clientFactory);
@@ -72,6 +73,7 @@ public abstract class AbstractWrapperFactory<C extends AbstractConsumer<?, ?>, P
 	@Override
 	public void close() throws MessagingException {
 		try {
+			clientFactory.close();
 			closeImpl();
 		} catch (final Exception e) {
 			throw new MessagingException(e);
@@ -88,10 +90,10 @@ public abstract class AbstractWrapperFactory<C extends AbstractConsumer<?, ?>, P
 	protected abstract void startProducerImpl(P client, Map<String, Object> clientStartProperties, F clientFactory)
 			throws Exception;
 
-	protected abstract M createMessageForProducerImpl(String body, String destination, P producer,
+	protected abstract M createMessageForProducerImpl(byte[] body, String destination, P producer,
 			Map<String, Object> messageProperties, F clientFactory) throws Exception;
 
-	protected abstract M createMessageForConsumerImpl(String body, String destination, C consumer,
+	protected abstract M createMessageForConsumerImpl(byte[] body, String destination, C consumer,
 			Map<String, Object> messageProperties, F clientFactory) throws Exception;
 
 }

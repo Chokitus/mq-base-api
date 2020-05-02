@@ -3,15 +3,25 @@ package br.edu.ufabc.mq.message;
 import java.util.Map;
 
 import br.edu.ufabc.mq.exception.MessagingException;
+import br.edu.ufabc.mq.factory.AbstractWrapperFactory;
 import lombok.Data;
 
+/**
+ * A Wrapper Message for each type of message queue system. Is created by the
+ * methods {@link AbstractWrapperFactory#createMessageForConsumer} and
+ * {@link AbstractWrapperFactory#createMessageForProducer}.
+ *
+ * @author victo
+ *
+ * @param <M>
+ */
 @Data
 public abstract class AbstractMessage<M> {
 	protected final M message;
 	protected final String destination;
 	protected final Map<String, Object> properties;
 
-	public String getBody() throws MessagingException {
+	public byte[] getBody() throws MessagingException {
 		try {
 			return getBodyImpl();
 		} catch (final Exception e) {
@@ -19,5 +29,5 @@ public abstract class AbstractMessage<M> {
 		}
 	}
 
-	protected abstract String getBodyImpl();
+	protected abstract byte[] getBodyImpl();
 }

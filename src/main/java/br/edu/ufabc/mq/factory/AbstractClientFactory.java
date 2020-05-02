@@ -19,9 +19,9 @@ public abstract class AbstractClientFactory<R extends AbstractConsumer<?, ?>, S 
 		this.clientFactoryProperties = clientFactoryProperties;
 	}
 
-	public R createReceiver(final Map<String, Object> receiverProperties) throws MessagingException {
+	public R createConsumer(final Map<String, Object> consumerProperties) throws MessagingException {
 		try {
-			return createConsumerImpl(receiverProperties);
+			return createConsumerImpl(consumerProperties);
 		} catch (final Exception e) {
 			throw new MessagingException(e);
 		}
@@ -45,6 +45,6 @@ public abstract class AbstractClientFactory<R extends AbstractConsumer<?, ?>, S 
 	}
 
 	protected abstract void closeImpl() throws Exception;
-	protected abstract R createConsumerImpl(Map<String, Object> receiverProperties) throws Exception;
+	protected abstract R createConsumerImpl(Map<String, Object> consumerProperties) throws Exception;
 	protected abstract S createProducerImpl(Map<String, Object> producerProperties) throws Exception;
 }
