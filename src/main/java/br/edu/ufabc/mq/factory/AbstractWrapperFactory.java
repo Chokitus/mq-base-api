@@ -41,15 +41,6 @@ public abstract class AbstractWrapperFactory<C extends AbstractConsumer<?, ?>, P
 		}
 	}
 
-	public M createMessageForConsumer(final byte[] body, final String destination, final C consumer,
-			final Map<String, Object> messageProperties) throws MessagingException {
-		try {
-			return createMessageForConsumerImpl(body, destination, consumer, messageProperties, clientFactory);
-		} catch (final Exception e) {
-			throw new MessagingException(e);
-		}
-	}
-
 	@SuppressWarnings("unchecked")
 	public void startConsumer(final AbstractConsumer<?, ?> consumer, final Map<String, Object> clientStartProperties)
 			throws MessagingException {
@@ -91,9 +82,6 @@ public abstract class AbstractWrapperFactory<C extends AbstractConsumer<?, ?>, P
 			throws Exception;
 
 	protected abstract M createMessageForProducerImpl(byte[] body, String destination, P producer,
-			Map<String, Object> messageProperties, F clientFactory) throws Exception;
-
-	protected abstract M createMessageForConsumerImpl(byte[] body, String destination, C consumer,
 			Map<String, Object> messageProperties, F clientFactory) throws Exception;
 
 }
