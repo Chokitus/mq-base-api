@@ -1,11 +1,11 @@
-package br.edu.ufabc.mq.factory;
+package br.edu.ufabc.chokitus.mq.factory;
 
 import java.util.Map;
 
-import br.edu.ufabc.mq.client.AbstractConsumer;
-import br.edu.ufabc.mq.client.AbstractProducer;
-import br.edu.ufabc.mq.exception.MessagingException;
-import br.edu.ufabc.mq.message.AbstractMessage;
+import br.edu.ufabc.chokitus.mq.client.AbstractConsumer;
+import br.edu.ufabc.chokitus.mq.client.AbstractProducer;
+import br.edu.ufabc.chokitus.mq.exception.MessagingException;
+import br.edu.ufabc.chokitus.mq.message.AbstractMessage;
 import lombok.Data;
 
 @Data

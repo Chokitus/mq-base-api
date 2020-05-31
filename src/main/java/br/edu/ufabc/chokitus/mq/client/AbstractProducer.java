@@ -1,9 +1,9 @@
-package br.edu.ufabc.mq.client;
+package br.edu.ufabc.chokitus.mq.client;
 
 import java.util.Map;
 
-import br.edu.ufabc.mq.exception.MessagingException;
-import br.edu.ufabc.mq.message.AbstractMessage;
+import br.edu.ufabc.chokitus.mq.exception.MessagingException;
+import br.edu.ufabc.chokitus.mq.message.AbstractMessage;
 import lombok.Data;
 
 @Data

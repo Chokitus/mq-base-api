@@ -1,4 +1,4 @@
-package br.edu.ufabc.mq.exception;
+package br.edu.ufabc.chokitus.mq.exception;
 
 public class MessagingException extends Exception {
 
