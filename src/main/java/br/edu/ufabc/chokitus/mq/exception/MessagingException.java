@@ -1,6 +1,6 @@
 package br.edu.ufabc.chokitus.mq.exception;
 
-public class MessagingException extends Exception {
+public class MessagingException extends RuntimeException {
 
 	private static final long serialVersionUID = 1L;
 
